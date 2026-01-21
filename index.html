@@ -121,11 +121,44 @@
         button:hover {
             background-color: #3367d6;
         }
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            text-align: center;
+            border: 1px solid #c3e6cb;
+        }
+        .error-message {
+            display: none;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            text-align: center;
+            border: 1px solid #f5c6cb;
+        }
         footer {
             text-align: center;
             margin-top: 50px;
             padding: 20px;
             color: #666;
+        }
+        @media (max-width: 768px) {
+            .teacher-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .teacher-photo {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
         }
     </style>
 </head>
@@ -136,10 +169,10 @@
     </header>
 
     <div class="teacher-container">
-        <img src="teacher.png" alt="Фото преподавателя Карины" class="teacher-photo">
+        <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Фото преподавателя Карины" class="teacher-photo">
         <div>
             <h2>Добро пожаловать в наш English Club!</h2>
-            <p>Меня зовут Карина, и я помогу вам не только улучшить английский, но и развить важные soft skills, которые пригодятся в жизни и карьере.</p>
+            <p>Меня зовут Карина, и я помогу вам не только улучшить английский, но и развить важные soft skills, которые пригодятся в жизни и карьере. Опыт преподавания - 5 лет. Специализация: коммуникативная методика и развитие разговорных навыков.</p>
         </div>
     </div>
 
@@ -150,6 +183,8 @@
         <div class="benefit-item">Развитие soft skills – учимся общаться, работать в команде и решать задачи вместе</div>
         <div class="benefit-item">Актуальные темы и возможность выбора</div>
         <div class="benefit-item">Комфортная атмосфера – никакого стресса, только поддержка и мотивация</div>
+        <div class="benefit-item">Гибкий график занятий</div>
+        <div class="benefit-item">Маленькие группы (3-6 человек)</div>
     </div>
 
     <div class="skills">
@@ -162,23 +197,25 @@
             <li><strong>Гибкость</strong> – адаптируешься к изменениям.</li>
             <li><strong>Лидерство</strong> – мотивируешь, распределяешь задачи.</li>
             <li><strong>Конфликты</strong> – решаешь споры конструктивно.</li>
+            <li><strong>Критическое мышление</strong> – анализируешь информацию.</li>
+            <li><strong>Презентационные навыки</strong> – уверенно выступаешь перед группой.</li>
         </ol>
     </div>
 
     <div class="signup-form">
         <h2>Записаться в English Club</h2>
-        <form action="#" method="POST">
+        <form id="contactForm" action="https://formspree.io/f/mqkvgejb" method="POST">
             <div class="form-group">
                 <label for="name">Ваше имя:</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" required minlength="2" maxlength="50" placeholder="Иван Иванов">
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" required placeholder="example@mail.com">
             </div>
             <div class="form-group">
                 <label for="phone">Телефон:</label>
-                <input type="tel" id="phone" name="phone" required>
+                <input type="tel" id="phone" name="phone" required placeholder="+7 (XXX) XXX-XX-XX" pattern="^(\+7|8)[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$">
             </div>
             <div class="form-group">
                 <label for="level">Ваш уровень английского:</label>
@@ -186,21 +223,191 @@
                     <option value="">Выберите уровень</option>
                     <option value="beginner">Начинающий (Beginner)</option>
                     <option value="elementary">Элементарный (Elementary)</option>
+                    <option value="pre-intermediate">Ниже среднего (Pre-Intermediate)</option>
                     <option value="intermediate">Средний (Intermediate)</option>
                     <option value="upper-intermediate">Выше среднего (Upper-Intermediate)</option>
                     <option value="advanced">Продвинутый (Advanced)</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="message">Ваши пожелания или вопросы:</label>
-                <textarea id="message" name="message" rows="4"></textarea>
+                <label for="preferred-time">Предпочтительное время занятий:</label>
+                <select id="preferred-time" name="preferred-time">
+                    <option value="">Выберите время</option>
+                    <option value="morning">Утро (9:00-12:00)</option>
+                    <option value="afternoon">День (14:00-17:00)</option>
+                    <option value="evening">Вечер (18:00-21:00)</option>
+                    <option value="weekend">Выходные</option>
+                </select>
             </div>
-            <button type="submit">Отправить заявку</button>
+            <div class="form-group">
+                <label for="message">Ваши пожелания или вопросы:</label>
+                <textarea id="message" name="message" rows="4" placeholder="Расскажите о ваших целях в изучении английского..."></textarea>
+            </div>
+            
+            <!-- Formspree скрытые поля -->
+            <input type="hidden" name="_subject" value="Новая заявка с English Club by Karina">
+            <input type="hidden" name="_replyto" id="_replyto">
+            <input type="hidden" name="_language" value="ru">
+            <input type="hidden" name="_format" value="plain">
+            <input type="text" name="_gotcha" style="display:none">
+            
+            <button type="submit" id="submitButton">Отправить заявку</button>
         </form>
+        <div id="successMessage" class="success-message">
+            <h3>✅ Спасибо за заявку!</h3>
+            <p>Мы получили вашу заявку и свяжемся с вами в течение 24 часов.</p>
+        </div>
+        <div id="errorMessage" class="error-message">
+            <h3>⚠️ Ошибка отправки</h3>
+            <p>Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз или свяжитесь с нами по телефону.</p>
+        </div>
     </div>
 
     <footer>
+        <p>Контакты: english.club.karina@gmail.com | +7 (XXX) XXX-XX-XX</p>
         <p>© 2023 English Club by Karina. Все права защищены.</p>
     </footer>
+
+    <script>
+        // Устанавливаем текущий год в футере
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearSpan = document.querySelector('footer p:last-child');
+            if (yearSpan) {
+                yearSpan.innerHTML = yearSpan.innerHTML.replace('2023', new Date().getFullYear());
+            }
+            
+            // Настройка Formspree replyto
+            const emailField = document.getElementById('email');
+            const replytoField = document.getElementById('_replyto');
+            
+            emailField.addEventListener('input', function() {
+                replytoField.value = this.value;
+            });
+        });
+
+        // Обработка формы
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const submitButton = document.getElementById('submitButton');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Скрываем предыдущие сообщения
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // Валидация телефона
+            const phoneInput = document.getElementById('phone');
+            const phonePattern = /^(\+7|8)[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$/;
+            
+            if (!phonePattern.test(phoneInput.value.replace(/\s/g, ''))) {
+                alert('Пожалуйста, введите корректный номер телефона. Формат: +7 XXX XXX-XX-XX или 8 XXX XXX-XX-XX');
+                phoneInput.focus();
+                return;
+            }
+            
+            // Сохраняем оригинальный текст кнопки
+            const originalButtonText = submitButton.textContent;
+            
+            // Показываем состояние загрузки
+            submitButton.textContent = 'Отправка...';
+            submitButton.disabled = true;
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Показываем сообщение об успехе
+                    successMessage.style.display = 'block';
+                    form.reset();
+                    
+                    // Прокручиваем к сообщению об успехе
+                    successMessage.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                    
+                    // Обновляем заголовок страницы на некоторое время
+                    const originalTitle = document.title;
+                    document.title = '✅ Заявка отправлена - English Club by Karina';
+                    
+                    setTimeout(() => {
+                        document.title = originalTitle;
+                    }, 3000);
+                    
+                } else {
+                    throw new Error('Ошибка отправки формы');
+                }
+            } catch (error) {
+                console.error('Form submission error:', error);
+                errorMessage.style.display = 'block';
+                errorMessage.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            } finally {
+                // Восстанавливаем кнопку
+                submitButton.textContent = originalButtonText;
+                submitButton.disabled = false;
+            }
+        });
+
+        // Маска для телефона
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, '');
+            
+            if (value.length === 0) return;
+            
+            // Если начинается с 7 или 8
+            if (value[0] === '7') {
+                value = '+7' + value.substring(1);
+            } else if (value[0] === '8') {
+                value = '8' + value.substring(1);
+            } else if (value[0] === '9') {
+                value = '+7' + value;
+            }
+            
+            // Форматирование
+            let formattedValue = '';
+            if (value.startsWith('+7')) {
+                formattedValue = '+7';
+                if (value.length > 2) formattedValue += ' (' + value.substring(2, 5);
+                if (value.length > 5) formattedValue += ') ' + value.substring(5, 8);
+                if (value.length > 8) formattedValue += '-' + value.substring(8, 10);
+                if (value.length > 10) formattedValue += '-' + value.substring(10, 12);
+            } else if (value.startsWith('8')) {
+                formattedValue = '8';
+                if (value.length > 1) formattedValue += ' (' + value.substring(1, 4);
+                if (value.length > 4) formattedValue += ') ' + value.substring(4, 7);
+                if (value.length > 7) formattedValue += '-' + value.substring(7, 9);
+                if (value.length > 9) formattedValue += '-' + value.substring(9, 11);
+            }
+            
+            this.value = formattedValue;
+        });
+
+        // Валидация в реальном времени
+        document.querySelectorAll('#contactForm input, #contactForm textarea').forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.hasAttribute('required') && !this.value.trim()) {
+                    this.style.borderColor = '#ea4335';
+                } else {
+                    this.style.borderColor = '#ddd';
+                }
+            });
+            
+            input.addEventListener('input', function() {
+                this.style.borderColor = '#4285f4';
+            });
+        });
+    </script>
 </body>
 </html>
